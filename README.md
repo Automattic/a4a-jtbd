@@ -67,26 +67,24 @@ When opened directly from disk, the dashboard reads an **embedded copy** of the 
 
 ## Repository & hosting (GitHub Pages)
 
-This project lives at **`github.com/Automattic/A4A-JTBD`**. The interactive map is hosted on **GitHub Pages**:
+This project lives at **`github.com/Automattic/a4a-jtbd`**. The interactive map is hosted on **GitHub Pages**:
 
-- **Live map:** `https://automattic.github.io/A4A-JTBD/` (redirects to `a4a-jtbd-map.html`, which reads `a4a-jtbd.json` live)
+- **Live map:** https://automattic.github.io/a4a-jtbd/ (redirects to `a4a-jtbd-map.html`, which reads `a4a-jtbd.json` live)
 
 `index.html` is a small redirect to the map so the Pages root opens it directly. `.nojekyll` tells Pages to serve the files as-is (no Jekyll processing). The canonical, editable dashboard file remains `a4a-jtbd-map.html`.
 
 ### First-time setup (run once, from this folder, by someone with access to the Automattic org)
 
 ```bash
-# 1. Create the repo in the Automattic org (GitHub CLI), or create it via github.com/new under Automattic
-gh repo create Automattic/A4A-JTBD --public --source=. --remote=origin --push
-
-# --- or, without gh: create an empty Automattic/A4A-JTBD on github.com, then ---
-git remote add origin https://github.com/Automattic/A4A-JTBD.git
+# 1. Point at the repo and push (SSH avoids the HTTPS password issue)
+git init
+git add -A
+git commit -m "Initial import"
 git branch -M main
+git remote add origin git@github.com:Automattic/a4a-jtbd.git
 git push -u origin main
 
-# 2. Enable Pages (build from the main branch root)
-gh api -X POST repos/Automattic/A4A-JTBD/pages -f 'source[branch]=main' -f 'source[path]=/'
-# --- or in the UI: Settings → Pages → Source: Deploy from a branch → main / (root) ---
+# 2. Enable Pages: Settings → Pages → Source: Deploy from a branch → main / (root)
 ```
 
 ### Updating later
