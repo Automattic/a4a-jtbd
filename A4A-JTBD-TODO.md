@@ -6,7 +6,7 @@ _Running notes for where this work is headed after the current mapping sessions.
 - [x] Review Overview JTBD for **returning users** — rebuilt Overview as two functions (NUX + Command center) with proper CTA micros and an `audience` badge (New user / Returning) on the canvas
 - [x] Finish all remaining **agency** pages (Purchases, Referrals, Migrations, WooPayments, Plugins, Reports, Partner Directories, Team, Global) — done; only the **Client canvas** remains
 - [ ] Map the **Client (secondary user) canvas** — the one remaining area
-- [ ] Get this into **GitHub** (repo as source of truth + Pages hosting)
+- [x] Get this into **GitHub** (repo as source of truth + Pages hosting) — live at github.com/Automattic/a4a-jtbd; map hosted at https://automattic.github.io/a4a-jtbd/ (reads a4a-jtbd.json live)
 - [ ] Record a **demo** of the dashboard
 - [ ] Share progress with **Ashley and Noam**
 - [ ] Clean up the **panel details UI** (the right-hand detail drawer)
