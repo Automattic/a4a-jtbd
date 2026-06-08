@@ -2,6 +2,40 @@
 
 A living, evidence-grounded map of **Automattic for Agencies (A4A)** as a hierarchy of Jobs To Be Done. Built in the Designomattic "Design Den" practice. The map is meant to stay alive: every time the product ships something new, the corresponding job gets added or updated.
 
+**Live map:** https://automattic.github.io/a4a-jtbd/
+
+## What this is
+
+A4A is a relationship tool that helps agencies earn recurring revenue, run many client sites from one place, and grow their business. This project captures everything an agency can do in that product as a single, structured set of Jobs To Be Done, then renders it as an interactive map you can pan, zoom, search, and filter.
+
+A Job To Be Done describes a real customer goal, free of any specific solution, using one formula: **when** [situation], **I want to** [motivation], **so I can** [outcome]. Framing the product this way keeps us focused on what the agency is actually trying to accomplish, so we can judge each feature and CTA by the job it serves.
+
+## How the map is broken down
+
+The map is organized along three dimensions, which are exactly the ones explained in the dashboard's **ⓘ Key** (bottom-left legend).
+
+**Layers (the levels of the map, top-down):**
+
+1. **Pillar (Layer 1):** the highest-level, durable jobs. Everything below rolls up to these.
+2. **Function (Layer 2):** the major functional areas (Sites, Referrals, Migrations, and so on) that roll up to a pillar.
+3. **Micro (Layer 3):** the granular, CTA-level tasks within a function (e.g., add an agency logo to a referral, remove a team member's access).
+
+**Pillars (the high-level jobs an agency hires A4A for):**
+
+- **Earn:** turn project work into predictable income that recurs on its own (commissions, revenue share, resale margins).
+- **Build:** deliver and operate many client sites reliably from one place on infrastructure the agency trusts.
+- **Grow:** win more of the right business and level up through qualified demand, credibility, and expertise.
+- **Multi-pillar:** a job that meaningfully serves more than one pillar at once (e.g., onboarding spans all three).
+
+**Job states and flags (badges on a card):**
+
+- **Draft / Validated:** where a job sits on its path to being backed by evidence.
+- **New user / Returning:** jobs for the first-run experience and jobs for the steady state.
+- **Upcoming:** a feature that has not shipped yet (also drawn as a dashed, striped card).
+- **Intermittent:** availability comes and goes, like a promo or incentive that turns on and off.
+- **Redundant:** duplicates functionality elsewhere and is flagged for the consolidation pass (see the job's note).
+- **Tier-gated:** available only to certain agency segments (e.g., Agency, Pro, Premier).
+
 ## Purpose
 
 This map currently mirrors the **current experience 1:1** with the product: it captures every task a user can perform across the dashboard. That completeness is deliberate, but it is the starting point, not the goal.
