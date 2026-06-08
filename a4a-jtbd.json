@@ -6037,6 +6037,386 @@
       ],
       "evidence": [],
       "note": "Help Center also opens the contact-support form via hash fragments (overlaps with the avatar's Contact support, by design)."
+    },
+    {
+      "id": "pillar-client",
+      "layer": "pillar",
+      "pillar": "client",
+      "parent": null,
+      "executor": "client",
+      "kind": "anchor",
+      "situation": "my agency recommends WordPress products and hosting I need but don't manage myself",
+      "motivation": "get those products set up and keep them paid for and running",
+      "outcome": "my site stays live and handled without me becoming the expert",
+      "status": "draft",
+      "source": [
+        "A4A client experience (sections/client/)"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "fn-client-start",
+      "layer": "function",
+      "function": "Get started from my referral",
+      "group": "Client portal",
+      "pillar": [
+        "client"
+      ],
+      "parent": "pillar-client",
+      "executor": "client",
+      "kind": "anchor",
+      "situation": "my agency sent me a referral for products or hosting",
+      "motivation": "open it and get into my own account",
+      "outcome": "I'm ready to act on what my agency set up",
+      "status": "draft",
+      "source": [
+        "client-landing.tsx",
+        "hooks/use-fetch-client-referral.ts"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "mc-client-start-1",
+      "layer": "micro",
+      "function": "Get started from my referral",
+      "title": "Open my referral",
+      "group": "Client portal",
+      "pillar": [
+        "client"
+      ],
+      "parent": "fn-client-start",
+      "executor": "client",
+      "kind": "task",
+      "cta": [
+        "Referral link"
+      ],
+      "situation": "I received a referral link from my agency",
+      "motivation": "follow it to see what they recommended",
+      "outcome": "I land in the right place to continue",
+      "status": "draft",
+      "source": [
+        "hooks/use-fetch-client-referral.ts",
+        "controller.tsx (requireClientAccessContext)"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "mc-client-start-2",
+      "layer": "micro",
+      "function": "Get started from my referral",
+      "title": "Create or log into my account",
+      "group": "Client portal",
+      "pillar": [
+        "client"
+      ],
+      "parent": "fn-client-start",
+      "executor": "client",
+      "kind": "task",
+      "cta": [
+        "Log in / Sign up (WordPress.com)"
+      ],
+      "situation": "I need an account to act on the referral",
+      "motivation": "sign in with WordPress.com or create an account",
+      "outcome": "I have access to my own client area",
+      "status": "draft",
+      "source": [
+        "client-landing.tsx (WordPress.com OAuth; external signup)"
+      ],
+      "evidence": [],
+      "note": "Account creation/login is handled by WordPress.com OAuth; there is no bespoke A4A client signup screen."
+    },
+    {
+      "id": "mc-client-start-3",
+      "layer": "micro",
+      "function": "Get started from my referral",
+      "title": "See what my agency recommended",
+      "group": "Client portal",
+      "pillar": [
+        "client"
+      ],
+      "parent": "fn-client-start",
+      "executor": "client",
+      "kind": "task",
+      "cta": [
+        "Review referral"
+      ],
+      "situation": "I want to understand what I'm being asked to buy",
+      "motivation": "review the referred products and hosting before paying",
+      "outcome": "I know what's included and why",
+      "status": "draft",
+      "source": [
+        "hooks/use-client-checkout.ts",
+        "sections/marketplace/checkout (isClient)"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "fn-client-pay",
+      "layer": "function",
+      "function": "Pay for what my agency recommended",
+      "group": "Client portal",
+      "pillar": [
+        "client"
+      ],
+      "parent": "pillar-client",
+      "executor": "client",
+      "kind": "anchor",
+      "situation": "I've decided to go ahead with my agency's recommendation",
+      "motivation": "pay for the referred products and hosting",
+      "outcome": "everything is purchased and ready to use",
+      "status": "draft",
+      "source": [
+        "sections/client/primary/checkout/",
+        "express-checkout/",
+        "checkout-v2/"
+      ],
+      "evidence": [],
+      "note": "Checkout reuses the agency marketplace checkout (ClientCheckout renders <Checkout isClient/>)."
+    },
+    {
+      "id": "mc-client-pay-1",
+      "layer": "micro",
+      "function": "Pay for what my agency recommended",
+      "title": "Review my cart",
+      "group": "Client portal",
+      "pillar": [
+        "client"
+      ],
+      "parent": "fn-client-pay",
+      "executor": "client",
+      "kind": "task",
+      "cta": [
+        "Checkout"
+      ],
+      "situation": "I'm about to buy what was referred",
+      "motivation": "confirm the products, hosting, and price before paying",
+      "outcome": "I'm confident I'm buying the right things",
+      "status": "draft",
+      "source": [
+        "sections/client/primary/checkout/index.tsx"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "mc-client-pay-2",
+      "layer": "micro",
+      "function": "Pay for what my agency recommended",
+      "title": "Add a payment method",
+      "group": "Client portal",
+      "pillar": [
+        "client"
+      ],
+      "parent": "fn-client-pay",
+      "executor": "client",
+      "kind": "task",
+      "cta": [
+        "Add payment method"
+      ],
+      "situation": "I need a card on file to complete the purchase",
+      "motivation": "enter my payment details securely",
+      "outcome": "I can pay now and for renewals",
+      "status": "draft",
+      "source": [
+        "/client/payment-methods/add",
+        "requireLegacyClientBillingContext"
+      ],
+      "evidence": []
+    },
+    {
+      "id": "mc-client-pay-3",
+      "layer": "micro",
+      "function": "Pay for what my agency recommended",
+      "title": "Pay and confirm",
+      "group": "Client portal",
+      "pillar": [
+        "client"
+      ],
+      "parent": "fn-client-pay",
+      "executor": "client",
+      "kind": "task",
+      "cta": [
+        "Pay",
+        "Express checkout"
+      ],
+      "situation": "my cart and payment method are ready",
+      "motivation": "complete the purchase in as few steps as possible",
+      "outcome": "my order is confirmed and my products are active",
+      "status": "draft",
+      "source": [
+        "sections/client/primary/express-checkout/index.tsx",
+        "checkout-v2/"
+      ],
+      "evidence": [],
+      "note": "Express checkout offers a faster path; checkout v2 is the newer flow (placeholder/error states present)."
+    },
+    {
+      "id": "fn-client-subs",
+      "layer": "function",
+      "function": "See and manage my subscriptions",
+      "group": "Client portal",
+      "pillar": [
+        "client"
+      ],
+      "parent": "pillar-client",
+      "executor": "client",
+      "kind": "anchor",
+      "situation": "I've bought products and hosting through my agency",
+      "motivation": "see what I own and keep it under control",
+      "outcome": "I know what's active and can act on it",
+      "status": "draft",
+      "source": [
+        "sections/client/primary/subscriptions-list/index.tsx"
+      ],
+      "evidence": [],
+      "note": "The client's home screen. Sidebar label: \"Your subscriptions\"."
+    },
+    {
+      "id": "mc-client-subs-1",
+      "layer": "micro",
+      "function": "See and manage my subscriptions",
+      "title": "View my subscriptions",
+      "group": "Client portal",
+      "pillar": [
+        "client"
+      ],
+      "parent": "fn-client-subs",
+      "executor": "client",
+      "kind": "task",
+      "cta": [
+        "Your subscriptions"
+      ],
+      "situation": "I want an overview of everything I'm paying for",
+      "motivation": "see each purchase, its price, and status in one list",
+      "outcome": "I have a clear picture of what I own",
+      "status": "draft",
+      "source": [
+        "subscriptions-list/index.tsx (columns: Purchase, Price, Subscription status, Actions)"
+      ],
+      "evidence": [],
+      "note": "Statuses: Pending / Active / Error / Canceled. Price shown per year or per month."
+    },
+    {
+      "id": "mc-client-subs-2",
+      "layer": "micro",
+      "function": "See and manage my subscriptions",
+      "title": "Manage my hosting",
+      "group": "Client portal",
+      "pillar": [
+        "client"
+      ],
+      "parent": "fn-client-subs",
+      "executor": "client",
+      "kind": "task",
+      "cta": [
+        "Manage in Pressable ↗"
+      ],
+      "situation": "my referred hosting needs hands-on management",
+      "motivation": "jump to the hosting control panel",
+      "outcome": "I can manage my site's hosting directly",
+      "status": "draft",
+      "source": [
+        "subscriptions-list/field-content.tsx"
+      ],
+      "evidence": [],
+      "note": "Opens Pressable externally."
+    },
+    {
+      "id": "mc-client-subs-3",
+      "layer": "micro",
+      "function": "See and manage my subscriptions",
+      "title": "Cancel a subscription",
+      "group": "Client portal",
+      "pillar": [
+        "client"
+      ],
+      "parent": "fn-client-subs",
+      "executor": "client",
+      "kind": "task",
+      "cta": [
+        "Cancel subscription"
+      ],
+      "situation": "I no longer want a product I'm paying for",
+      "motivation": "cancel it and stop being billed",
+      "outcome": "I'm no longer charged for what I don't need",
+      "status": "draft",
+      "source": [
+        "cancel-subscription-confirmation-dialog/index.tsx"
+      ],
+      "evidence": [],
+      "note": "Only available while a subscription is Active. Confirmation: \"Are you sure you want to cancel this subscription?\" (Cancel subscription / Keep the subscription)."
+    },
+    {
+      "id": "fn-client-billing",
+      "layer": "function",
+      "function": "Manage my billing",
+      "group": "Client portal",
+      "pillar": [
+        "client"
+      ],
+      "parent": "pillar-client",
+      "executor": "client",
+      "kind": "anchor",
+      "situation": "I'm paying for products and hosting over time",
+      "motivation": "keep my payment details and records in order",
+      "outcome": "billing stays current and I have what I need for accounting",
+      "status": "draft",
+      "source": [
+        "/client/payment-methods",
+        "/client/invoices"
+      ],
+      "evidence": [],
+      "note": "Largely reuses agency billing UI; for 'billingdragon' users these link out to wordpress.com/me/purchases."
+    },
+    {
+      "id": "mc-client-billing-1",
+      "layer": "micro",
+      "function": "Manage my billing",
+      "title": "Manage my payment methods",
+      "group": "Client portal",
+      "pillar": [
+        "client"
+      ],
+      "parent": "fn-client-billing",
+      "executor": "client",
+      "kind": "task",
+      "cta": [
+        "Payment methods",
+        "Add payment method"
+      ],
+      "situation": "my card changes or expires over time",
+      "motivation": "add or update the card on file",
+      "outcome": "my subscriptions keep renewing without interruption",
+      "status": "draft",
+      "source": [
+        "/client/payment-methods (+/add)"
+      ],
+      "evidence": [],
+      "note": "Reused billing UI; external (wordpress.com/me/purchases/payment-methods) for billingdragon users."
+    },
+    {
+      "id": "mc-client-billing-2",
+      "layer": "micro",
+      "function": "Manage my billing",
+      "title": "View my invoices",
+      "group": "Client portal",
+      "pillar": [
+        "client"
+      ],
+      "parent": "fn-client-billing",
+      "executor": "client",
+      "kind": "task",
+      "cta": [
+        "Invoices"
+      ],
+      "situation": "I need records of what I've paid",
+      "motivation": "view my invoices and billing history",
+      "outcome": "I have receipts for my accounting",
+      "status": "draft",
+      "source": [
+        "/client/invoices"
+      ],
+      "evidence": [],
+      "note": "Reused billing UI; external (wordpress.com/me/purchases/billing) for billingdragon users."
     }
   ]
 }

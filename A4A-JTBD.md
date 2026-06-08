@@ -459,6 +459,35 @@ _Actions a user can take from **any** page via the sidebar, not tied to one feat
 > When I hit a question or problem while working anywhere in the product, I want to open help without leaving what I'm doing, so I find answers or reach support in context.
 - **Open the Help Center**: _Help (?) icon → toggles Help Center panel (docs + contact support)_
 
+### Client canvas (secondary user) — one client pillar; executor: client
+_The agency's **client** is a secondary user with a deliberately light experience (`sections/client/`): a 3-item area (Your subscriptions · Payment methods · Invoices) plus a referral-driven checkout. Much of it reuses the agency/marketplace/WordPress.com UI. On the dashboard this lives on its own **Client** canvas, and the Pillar/Page/State filters are hidden there (Status stays). Sources: dashboard screenshots, `sections/client/`._
+
+#### PILLAR — Get and run the products my agency set me up with _(client)_
+> When my agency recommends WordPress products and hosting I need but don't manage myself, I want to get those products set up and keep them paid for and running, so my site stays live and handled without me becoming the expert.
+
+#### Get started from my referral _(client)_ — landing, account, referral
+> When my agency sent me a referral for products or hosting, I want to open it and get into my own account, so I'm ready to act on what my agency set up.
+- **Open my referral**: _Referral link → client landing (requireClientAccessContext)_
+- **Create or log into my account**: _WordPress.com OAuth (external; no bespoke A4A signup)_
+- **See what my agency recommended**: _Review referral before paying_
+
+#### Pay for what my agency recommended _(client)_ — checkout
+> When I've decided to go ahead with my agency's recommendation, I want to pay for the referred products and hosting, so everything is purchased and ready to use.
+- **Review my cart**: _Checkout (reuses marketplace checkout, `isClient`)_
+- **Add a payment method**: _Add payment method_
+- **Pay and confirm**: _Pay · Express checkout (checkout v2 is the newer flow)_
+
+#### See and manage my subscriptions _(client)_ — the client home
+> When I've bought products and hosting through my agency, I want to see what I own and keep it under control, so I know what's active and can act on it.
+- **View my subscriptions**: _"Your subscriptions" (Purchase · Price · Subscription status · Actions; statuses: Pending / Active / Error / Canceled)_
+- **Manage my hosting**: _Manage in Pressable ↗ (external)_
+- **Cancel a subscription**: _Cancel subscription (only while Active; confirm dialog)_
+
+#### Manage my billing _(client)_ — payment methods & invoices
+> When I'm paying for products and hosting over time, I want to keep my payment details and records in order, so billing stays current and I have what I need for accounting.
+- **Manage my payment methods**: _Payment methods · Add payment method (external to wordpress.com/me for billingdragon users)_
+- **View my invoices**: _Invoices (external to wordpress.com/me for billingdragon users)_
+
 ---
 
 ## LAYER 3: Micro Functions

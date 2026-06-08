@@ -5,7 +5,7 @@ _Running notes for where this work is headed after the current mapping sessions.
 ## Up next (added end of session)
 - [x] Review Overview JTBD for **returning users** — rebuilt Overview as two functions (NUX + Command center) with proper CTA micros and an `audience` badge (New user / Returning) on the canvas
 - [x] Finish all remaining **agency** pages (Purchases, Referrals, Migrations, WooPayments, Plugins, Reports, Partner Directories, Team, Global) — done; only the **Client canvas** remains
-- [ ] Map the **Client (secondary user) canvas** — the one remaining area
+- [x] Map the **Client (secondary user) canvas** — one client pillar ("Get and run the products my agency set me up with") + 4 functions (Get started from my referral / Pay for what my agency recommended / See and manage my subscriptions / Manage my billing) + micros; `executor: client`, new "Client portal" group, client pillar color. Pillar/Page/State filters hide in Client mode; Status stays.
 - [x] Get this into **GitHub** (repo as source of truth + Pages hosting) — live at github.com/Automattic/a4a-jtbd; map hosted at https://automattic.github.io/a4a-jtbd/ (reads a4a-jtbd.json live)
 - [ ] Record a **demo** of the dashboard
 - [ ] Share progress with **Ashley and Noam**
@@ -37,7 +37,7 @@ _Running notes for where this work is headed after the current mapping sessions.
   - [x] Team (one major function: Run my agency with a team; 8 micros covering invite, member/invite list, pending-invite management, roles, remove, transfer ownership, leave, and accept-invite)
   - [x] Global (always-available sidebar actions; two major functions: Manage my account & profile (avatar menu) / Get help anytime (help icon); new "Global" page group)
 - [x] Build **Layer 3: Micro Functions** under each major function _(done for every function mapped so far; continue for remaining functions)_
-- [ ] Flesh out the **Clients (secondary user)** section
+- [x] Flesh out the **Clients (secondary user)** section — done on its own Client canvas
 - [ ] Validate all layers against incoming customer feedback (Enterpret / A4A ticket + transcript synthesis)
 - [ ] Resolve open question: should Build and Grow each split into two pillar-level jobs?
 - [ ] **(Jeff)** Scour Zendesk later to find evidence: pull supporting tickets/quotes to validate draft jobs
