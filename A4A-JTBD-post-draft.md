@@ -8,6 +8,8 @@ Automattic for Agencies is a relationship tool. It helps agencies earn passive i
 
 To make that experience easier to reason about, I mapped the full product into a single living JTBD framework. It holds 251 jobs today, laid out as a FigJam style interactive map you can pan, zoom, search, and filter by pillar, status, or page. I also added a search that highlights the jobs tied to a term inside a pillar and dims the rest, so we can zero in on a topic in seconds.
 
+**Explore the live map:** https://automattic.github.io/a4a-jtbd/ (source: https://github.com/Automattic/a4a-jtbd)
+
 The core idea is simple. We can now see every touchpoint and every job our customers do in the product as it stands today. From there we can validate and streamline those jobs with data and first hand evidence. Every feature release and every CTA we add creates another job, so the map grows alongside the product and stays current.
 
 ## Why this helps our customers and our team

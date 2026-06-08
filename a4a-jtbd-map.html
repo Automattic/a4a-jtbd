@@ -310,14 +310,25 @@
         <button class="chip grow" data-pillar="grow">Grow</button>
       </div>
       <div class="filter-group">
+        <span class="lbl">Page</span>
+        <select id="pageFilter" class="page-select"><option value="all">All pages</option></select>
+      </div>
+      <div class="filter-group">
+        <span class="lbl">State</span>
+        <select id="stateFilter" class="page-select">
+          <option value="all">All states</option>
+          <option value="upcoming">Upcoming</option>
+          <option value="nux">New user</option>
+          <option value="intermittent">Intermittent</option>
+          <option value="redundant">Redundant</option>
+          <option value="gated">Tier-gated</option>
+        </select>
+      </div>
+      <div class="filter-group">
         <span class="lbl">Status</span>
         <button class="chip neutral active" data-status="all">All</button>
         <button class="chip neutral" data-status="draft">Draft</button>
         <button class="chip neutral" data-status="validated">Validated</button>
-      </div>
-      <div class="filter-group">
-        <span class="lbl">Page</span>
-        <select id="pageFilter" class="page-select"><option value="all">All pages</option></select>
       </div>
     </div>
   </div>
@@ -386,7 +397,7 @@ const SLOT_W = 268, ROW = 235, H_GAP = 26;
 const PILLAR_COLORS = { earn:'#1fa463', build:'#2f6fe0', grow:'#8a4fd6', multi:'#7b8794' };
 
 let ALL_JOBS = [], JOBS = [], byId = {}, roots = [];
-const filters = { pillar:'all', status:'all', group:'all' };
+const filters = { pillar:'all', status:'all', group:'all', state:'all' };
 const GROUP_ORDER = ["Overview","Agency tier","Exclusive offers","Resources and tools","Sites","Marketplace","Reports","Partner Directories","Global","Pillar-level jobs"];
 let mode = 'agency';
 let hideSupporting = false, lastRendered = [], firstLoad = true;
@@ -403,7 +414,9 @@ function primaryParent(j){ return Array.isArray(j.parent)?j.parent[0]:j.parent; 
 function pillarKey(j){ return Array.isArray(j.pillar)?(j.pillar.length>1?'multi':j.pillar[0]):j.pillar; }
 function pillarList(j){ return Array.isArray(j.pillar)?j.pillar:[j.pillar]; }
 function nodeColor(j){ return PILLAR_COLORS[pillarKey(j)]||PILLAR_COLORS.multi; }
-function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+// only allow safe link schemes; neutralize javascript:, data:, etc. (defends against a malicious URL in the data/PR)
+function safeUrl(u){ const s=(u||'').trim(); return /^(https?:|mailto:)/i.test(s) ? s : '#'; }
 function hexToRgba(hex,a){ const n=parseInt(hex.slice(1),16); return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`; }
 
 function buildTree(){
@@ -437,6 +450,16 @@ function matchesFilter(j){
   if(filters.status!=='all' && j.status!==filters.status) return false;
   // Page/group filter: pillars always stay in focus (the spine); functions+micros only if in the selected group
   if(filters.group!=='all' && j.layer!=='pillar' && groupOf(j)!==filters.group) return false;
+  // State filter: pillars stay as the spine; functions+micros only if they carry that state flag
+  if(filters.state!=='all' && j.layer!=='pillar'){
+    const ok = filters.state==='upcoming' ? !!j.upcoming
+      : filters.state==='nux' ? j.audience==='nux'
+      : filters.state==='intermittent' ? !!j.intermittent
+      : filters.state==='redundant' ? !!j.redundant
+      : filters.state==='gated' ? !!j.gated
+      : true;
+    if(!ok) return false;
+  }
   return true;
 }
 function visibleNodes(){ const out=[]; roots.forEach(r=>(function w(n){ out.push(n); placedKids(n).forEach(w); })(r)); return out; }
@@ -615,7 +638,7 @@ function renderDrawer(){
     <div class="ev-item">
       <div class="ev-top">
         <span class="ev-type ${e.type||'link'}">${typeLabel(e.type)}</span>
-        <a href="${esc(e.url)}" target="_blank">${esc(e.url)}</a>
+        <a href="${esc(safeUrl(e.url))}" target="_blank" rel="noopener noreferrer">${esc(e.url)}</a>
         <button class="ev-rm" data-rm="${i}" title="Remove">×</button>
       </div>
       ${e.quote?`<div class="ev-quote">“${esc(e.quote)}”</div>`:''}
@@ -716,6 +739,28 @@ function fitToGroup(group){
   animateTo({ scale:s, x:r.width/2 - cx*s, y:r.height/2 - cy*s });
 }
 
+/* zoom into the biggest spatial cluster of cards matching the current filters (used by the State filter) */
+function fitToState(){
+  const ms = lastRendered.filter(n => n._wx!=null && n.layer!=='pillar' && matchesFilter(n));
+  if(!ms.length){ animateTo(viewForWholeMap()); return; }
+  // cluster by horizontal proximity (related jobs sit near each other on the X axis)
+  ms.sort((a,b)=>a._wx-b._wx);
+  const GAP=560; let clusters=[], cur=[ms[0]];
+  for(let i=1;i<ms.length;i++){ if(ms[i]._wx-ms[i-1]._wx>GAP){ clusters.push(cur); cur=[ms[i]]; } else cur.push(ms[i]); }
+  clusters.push(cur);
+  const span=c=>c[c.length-1]._wx-c[0]._wx;
+  clusters.sort((a,b)=> b.length-a.length || span(b)-span(a));
+  const ns=clusters[0];
+  let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
+  ns.forEach(n=>{ minX=Math.min(minX,n._wx-n._w/2); maxX=Math.max(maxX,n._wx+n._w/2); minY=Math.min(minY,n._wy); maxY=Math.max(maxY,n._wy+(n._h||150)); });
+  minY -= 70;
+  const r=viewport.getBoundingClientRect(), pad=80;
+  const cw=(maxX-minX)+pad*2, ch=(maxY-minY)+pad*2;
+  const s=Math.min(r.width/cw, r.height/ch, 1.4);
+  const cx=(minX+maxX)/2, cy=(minY+maxY)/2;
+  animateTo({ scale:s, x:r.width/2 - cx*s, y:Math.max(40, r.height/2 - cy*s) });
+}
+
 /* filters */
 document.querySelectorAll('.chip').forEach(chip=>{
   chip.addEventListener('click',()=>{
@@ -724,6 +769,8 @@ document.querySelectorAll('.chip').forEach(chip=>{
     filters[grp]=val;
     document.querySelectorAll(grp==='pillar'?'[data-pillar]':'[data-status]').forEach(c=>c.classList.remove('active'));
     chip.classList.add('active'); render();
+    // bring the chosen pillar front and center (status filter leaves the view put)
+    if(grp==='pillar'){ animateTo(val==='all' ? viewForWholeMap() : viewForPillar('pillar-'+val)); }
   });
 });
 viewport.addEventListener('click',e=>{ if(!e.target.closest('.node')){ drawer.classList.remove('open'); selectedId=null; render(); } });
@@ -817,11 +864,13 @@ document.addEventListener('click',e=>{ if(!e.target.closest('#countInfo') && !e.
 function populatePageFilter(){
   const sel=document.getElementById('pageFilter');
   const present=new Set(ALL_JOBS.filter(j=>j.layer==='function').map(j=>j.group).filter(Boolean));
+  present.delete('Pillar-level jobs'); // covered by the Pillar filter
   const ordered=[...present].sort((a,b)=>a.localeCompare(b));
   sel.innerHTML='<option value="all">All pages</option>'+ordered.map(g=>`<option value="${esc(g)}">${esc(g)}</option>`).join('');
   sel.value=filters.group;
 }
 document.getElementById('pageFilter').addEventListener('change',e=>{ filters.group=e.target.value; render(); if(filters.group==='all'){ animateTo(viewForWholeMap()); } else { fitToGroup(filters.group); } });
+document.getElementById('stateFilter').addEventListener('change',e=>{ filters.state=e.target.value; render(); if(filters.state==='all'){ animateTo(viewForWholeMap()); } else { fitToState(); } });
 
 /* mode toggle */
 document.querySelectorAll('#modeSeg button').forEach(b=>{

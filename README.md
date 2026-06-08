@@ -114,11 +114,11 @@ This project lives at **`github.com/Automattic/a4a-jtbd`**. The interactive map 
 git init
 git add -A
 git commit -m "Initial import"
-git branch -M main
+git branch -M trunk
 git remote add origin git@github.com:Automattic/a4a-jtbd.git
-git push -u origin main
+git push -u origin trunk
 
-# 2. Enable Pages: Settings → Pages → Source: Deploy from a branch → main / (root)
+# 2. Enable Pages: Settings → Pages → Source: Deploy from a branch → trunk / (root)
 ```
 
 ### Updating later
@@ -127,7 +127,7 @@ git push -u origin main
 git add -A && git commit -m "Update jobs" && git push
 ```
 
-Pages redeploys automatically on push to `main`.
+Pages redeploys automatically on push to `trunk`.
 
 ## Where this is headed
 
